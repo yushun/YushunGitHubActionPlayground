@@ -20,4 +20,6 @@ jobs:
           bundler-cache: true
 
       - name: Lint code for consistent style
-        run: git diff origin/main --name-only | xargs bin/rubocop --force-exclusion
+        run: |
+          git fetch origin main
+          git diff origin/main --name-only | xargs bin/rubocop --force-exclusion
