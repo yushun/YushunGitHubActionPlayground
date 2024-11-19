@@ -18,8 +18,9 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
+      
+      - name: Get main branch (only want to lint the new code that is different from main)
+        run: git fetch origin main
+      
       - name: Lint code for consistent style
-        run: |
-          git fetch origin main
-          git diff origin/main --name-only | xargs bin/rubocop --force-exclusion
+        run: git diff origin/main --name-only | xargs bin/rubocop --force-exclusion
