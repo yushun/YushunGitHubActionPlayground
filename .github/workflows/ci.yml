@@ -2,6 +2,7 @@ name: CI
 
 on:
   pull_request:
+    branches: [ main ]
   push:
     branches: [ main ]
 
@@ -17,6 +18,9 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
+      
+      - name: Get main branch (only want to lint the new code that is different from main)
+        run: git fetch origin main
+      
       - name: Lint code for consistent style
-        run: bin/rubocop
+        run: git diff origin/main --name-only | xargs bin/rubocop --force-exclusion
